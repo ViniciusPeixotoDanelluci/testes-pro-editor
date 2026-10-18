@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Student } from '../../students/entities/student.entity.js';
+import type { Relation } from "typeorm"
 
 @Entity('teams')
 export class Team {
@@ -13,5 +14,6 @@ export class Team {
   password!: string;
 
   @OneToMany(() => Student, (student) => student.team, { nullable: true })
-  members?: Student[]
+  members?: Relation<Student[]>
+
 }

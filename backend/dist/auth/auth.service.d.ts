@@ -1,24 +1,22 @@
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
-import { Manager } from '../managers/manager.entity.js';
-import { Team } from '../teams/team.entity.js';
+import { Team } from '../teams/entities/team.entity.js';
+import { SignInDto } from './dto/sign-in.dto.js';
+import { Manager } from '../managers/entities/manager.entity.js';
 export type AccountType = 'ADMIN' | 'TEAM';
-interface SignInInput {
-    username: string;
-    password: string;
-    accountType: AccountType;
-}
 export declare class AuthService {
     private readonly config;
-    private readonly jwt;
-    private readonly managers;
-    private readonly teams;
-    constructor(config: ConfigService, jwt: JwtService, managers: Repository<Manager>, teams: Repository<Team>);
-    signIn(input: SignInInput): Promise<{
+    private readonly jwtService;
+    private readonly managerRepository;
+    private readonly teamRepository;
+    constructor(config: ConfigService, jwtService: JwtService, managerRepository: Repository<Manager>, teamRepository: Repository<Team>);
+    signIn(signInDto: SignInDto): Promise<{
         accessToken: string;
         refreshToken: string;
     }>;
-    private createTokens;
+    refresh(refreshToken: string): Promise<{
+        accessToken: string;
+        refreshToken: string;
+    }>;
 }
-export {};

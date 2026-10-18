@@ -6,15 +6,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { AuthModule } from './auth/auth.module.js';
-import { EventsModule } from './events/events.module.js';
-import { ManagersModule } from './managers/managers.module.js';
+import { StudentsModule } from './students/students.module.js';
+import { ManagerModule } from './managers/manager.module.js';
 import { TeamsModule } from './teams/teams.module.js';
-import { TasksModule } from './tasks/tasks.module.js';
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -25,30 +23,16 @@ AppModule = __decorate([
                 inject: [ConfigService],
                 useFactory: (config) => ({
                     type: 'sqlite',
-                    database: config.get('DATABASE_PATH') ?? 'backend.sqlite',
+                    database: 'db.sqlite',
                     autoLoadEntities: true,
-                    synchronize: config.get('NODE_ENV') !== 'production',
+                    synchronize: true,
+                    logging: true,
                 }),
             }),
-            JwtModule.registerAsync({
-                global: true,
-                inject: [ConfigService],
-                useFactory: (config) => {
-                    const secret = config.get('JWT_SECRET');
-                    if (!secret && process.env.NODE_ENV === 'production') {
-                        throw new Error('JWT_SECRET must be configured in production.');
-                    }
-                    return {
-                        secret: secret ?? 'local-development-secret-change-me',
-                        signOptions: { expiresIn: '15m' },
-                    };
-                },
-            }),
             AuthModule,
-            EventsModule,
-            ManagersModule,
+            ManagerModule,
             TeamsModule,
-            TasksModule,
+            StudentsModule,
         ],
         controllers: [AppController],
         providers: [AppService],

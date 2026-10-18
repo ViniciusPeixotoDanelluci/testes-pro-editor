@@ -1,18 +1,20 @@
-import { Column, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import type { Relation } from "typeorm"
 import { Team } from "../../teams/entities/team.entity.js"
+import { Semesters } from "../../common/semester-enum.js"
 
+@Entity('students')
 export class Student {
     @PrimaryGeneratedColumn()
     id!: number
 
     @Column({ length: 50 })
-    username!: string
-
-
-    @Column({ length: 30 })
-    password?: string
-
+    name!: string
+    
+    @Column()
+    semester!: Semesters
+    
     @ManyToOne(() => Team, (team) => team.members)
     //@JoinColumn({ name: 'teamId' }) // isso apenas explicita a relação, mas não precisa pois já é feito
-    team?: Team
+    team?: Relation<Team>
 }

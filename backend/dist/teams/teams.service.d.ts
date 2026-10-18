@@ -1,26 +1,10 @@
-import { ConfigService } from '@nestjs/config';
 import { Repository } from 'typeorm';
-import { Team } from './team.entity.js';
-export interface CreateTeamInput {
-    username: string;
-    name: string;
-    password: string;
-    semester?: string;
-}
-export type UpdateTeamInput = Partial<CreateTeamInput>;
+import { Team } from './entities/team.entity.js';
+import { CreateTeamDto } from './dto/create-team.dto.js';
 export declare class TeamsService {
-    private readonly teams;
-    private readonly config;
-    constructor(teams: Repository<Team>, config: ConfigService);
+    private readonly teamRepository;
+    constructor(teamRepository: Repository<Team>);
     findAll(): Promise<Team[]>;
-    findOne(id: number): Promise<Team>;
-    create(input: CreateTeamInput): Promise<Team>;
-    update(id: number, input: UpdateTeamInput): Promise<Team>;
-    remove(id: number): Promise<{
-        deleted: boolean;
-    }>;
-    private validate;
-    private validatePassword;
-    private salt;
-    private isUniqueConstraintError;
+    findOne(id: number): Promise<Team | null>;
+    create(createTeamDto: CreateTeamDto): Promise<Team>;
 }

@@ -10,9 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, UseGuards, } from '@nestjs/common';
-import { AdminJwtGuard } from '../auth/admin-jwt.guard.js';
+import { Body, Controller, Get, Param, Post, } from '@nestjs/common';
 import { TeamsService } from './teams.service.js';
+import { CreateTeamDto } from './dto/create-team.dto.js';
 let TeamsController = class TeamsController {
     teams;
     constructor(teams) {
@@ -24,14 +24,8 @@ let TeamsController = class TeamsController {
     findOne(id) {
         return this.teams.findOne(id);
     }
-    create(body) {
-        return this.teams.create(body);
-    }
-    update(id, body) {
-        return this.teams.update(id, body);
-    }
-    remove(id) {
-        return this.teams.remove(id);
+    create(createTeamDto) {
+        return this.teams.create(createTeamDto);
     }
 };
 __decorate([
@@ -42,7 +36,7 @@ __decorate([
 ], TeamsController.prototype, "findAll", null);
 __decorate([
     Get(':id'),
-    __param(0, Param('id', ParseIntPipe)),
+    __param(0, Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
@@ -51,27 +45,11 @@ __decorate([
     Post(),
     __param(0, Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [CreateTeamDto]),
     __metadata("design:returntype", void 0)
 ], TeamsController.prototype, "create", null);
-__decorate([
-    Patch(':id'),
-    __param(0, Param('id', ParseIntPipe)),
-    __param(1, Body()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
-    __metadata("design:returntype", void 0)
-], TeamsController.prototype, "update", null);
-__decorate([
-    Delete(':id'),
-    __param(0, Param('id', ParseIntPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", void 0)
-], TeamsController.prototype, "remove", null);
 TeamsController = __decorate([
-    Controller('teams'),
-    UseGuards(AdminJwtGuard),
+    Controller('times'),
     __metadata("design:paramtypes", [TeamsService])
 ], TeamsController);
 export { TeamsController };

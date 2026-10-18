@@ -1,27 +1,18 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService, AccountType } from './auth.service.js';
-
-interface SignInBody {
-  username: string;
-  password: string;
-  accountType: AccountType;
-}
-
-interface RefreshBody {
-  refreshToken: string
-}
+import { SignInDto } from './dto/sign-in.dto.js';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signin')
-  signIn(@Body() body: SignInBody) {
-    return this.authService.signIn(body);
+  signIn(@Body() signInDto: SignInDto) {
+    return this.authService.signIn(signInDto);
   }
 
   @Post('refresh')
-  refresh(@Body() body: RefreshBody) {
-    return this.authService.signIn(body);
+  refresh(@Body() refreshToken: string) {
+    return this.authService.refresh(refreshToken);
   }
 }

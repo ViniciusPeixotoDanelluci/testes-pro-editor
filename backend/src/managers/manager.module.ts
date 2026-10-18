@@ -10,4 +10,4 @@ import { Manager } from './entities/manager.entity.js';
   providers: [ManagersService],
   exports: [ManagersService],
 })
-export class AdminModule {}
+export class ManagerModule {}

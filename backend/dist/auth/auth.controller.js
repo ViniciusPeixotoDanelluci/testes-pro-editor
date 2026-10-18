@@ -12,22 +12,33 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service.js';
+import { SignInDto } from './dto/sign-in.dto.js';
 let AuthController = class AuthController {
     authService;
     constructor(authService) {
         this.authService = authService;
     }
-    signIn(body) {
-        return this.authService.signIn(body);
+    signIn(signInDto) {
+        return this.authService.signIn(signInDto);
+    }
+    refresh(refreshToken) {
+        return this.authService.refresh(refreshToken);
     }
 };
 __decorate([
     Post('signin'),
     __param(0, Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [SignInDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "signIn", null);
+__decorate([
+    Post('refresh'),
+    __param(0, Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "refresh", null);
 AuthController = __decorate([
     Controller('auth'),
     __metadata("design:paramtypes", [AuthService])

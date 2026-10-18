@@ -7,7 +7,6 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { hashPassword } from '../common/password.js';
 import { Team } from './entities/team.entity.js';
 import { CreateTeamDto } from './dto/create-team.dto.js';
 
@@ -16,42 +15,49 @@ import { CreateTeamDto } from './dto/create-team.dto.js';
 export class TeamsService {
   constructor(
     @InjectRepository(Team)
-    private readonly teams: Repository<Team>,
+    private readonly teamRepository: Repository<Team>,
     // private readonly config: ConfigService,
   ) {}
 
   findAll() {
-    return this.teams.find();
+    return this.teamRepository.find();
   }
 
   findOne(id: number) {
-    const team = this.teams.findOneBy({ id });
+    const team = this.teamRepository.findOneBy({ id });
    
     if (!team) throw new NotFoundException('Time não encontrado.');
    
     return team;
   }
 
-  async create(createTeamDto: CreateTeamDto) {
-    this.validate(input.username, input.name, input.password);
-    try {
-      const saved = await this.teams.save(
-        this.teams.create({
-          username: input.username.trim(),
-          name: input.name.trim(),
-          semester: input.semester?.trim() || null,
-          passwordHash: hashPassword(input.password, this.salt()),
-        }),
-      );
-      return this.findOne(saved.id);
-    } catch (error) {
-      if (this.isUniqueConstraintError(error)) {
-        throw new ConflictException('Team username is already registered.');
-      }
-      throw error;
-    }
-  }
+  create(createTeamDto: CreateTeamDto) {
+    // this.validate(input.username, input.name, input.password);
+    // try {
+    //   const saved = await this.teams.save(
+    //     this.teams.create({
+    //       username: input.username.trim(),
+    //       name: input.name.trim(),
+    //       semester: input.semester?.trim() || null,
+    //       passwordHash: hashPassword(input.password, this.salt()),
+    //     }),
+    //   );
+    //   return this.findOne(saved.id);
+    // } catch (error) {
+    //   if (this.isUniqueConstraintError(error)) {
+    //     throw new ConflictException('Team username is already registered.');
+    //   }
+    //   throw error;
+    // }
+    const team = this.teamRepository.create(createTeamDto)
 
+    if (!team) throw new NotFoundException('Time não registrado.');
+
+    console.log("time", team)
+    
+    return this.teamRepository.save(team)
+  }
+/*
   async update(id: number, input: UpdateTeamInput) {
     const team = await this.findOne(id);
     if (input.username !== undefined) {
@@ -97,13 +103,9 @@ export class TeamsService {
     }
   }
 
-  private salt() {
-    return this.config.get<string>('PASSWORD_SALT') ?? 'local-development-salt';
-  }
-
   private isUniqueConstraintError(error: unknown) {
     return typeof error === 'object' && error !== null && 'code' in error &&
       ((error as { code: string }).code === 'SQLITE_CONSTRAINT' ||
         (error as { code: string }).code === 'SQLITE_CONSTRAINT_UNIQUE');
-  }
+  }*/
 }

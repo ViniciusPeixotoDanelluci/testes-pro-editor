@@ -1,5 +1,6 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 
+@Entity('managers')
 export class Manager {
     @PrimaryGeneratedColumn()
     id!: number
