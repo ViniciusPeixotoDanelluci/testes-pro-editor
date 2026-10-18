@@ -9,6 +9,10 @@ import { EventsModule } from './events/events.module.js';
 import { ManagersModule } from './managers/managers.module.js';
 import { TeamsModule } from './teams/teams.module.js';
 import { TasksModule } from './tasks/tasks.module.js';
+import { ExampleModule } from './example/example.module.js';
+import { AdminModule } from './managers/manager.module.js';
+import { StudentsModule } from './students/students.module.js';
+import { TeamsModule } from './teams/teams.module.js';
 
 @Module({
   imports: [
@@ -41,6 +45,9 @@ import { TasksModule } from './tasks/tasks.module.js';
     ManagersModule,
     TeamsModule,
     TasksModule,
+    ExampleModule,
+    AdminModule,
+    StudentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

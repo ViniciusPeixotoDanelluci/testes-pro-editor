@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminJwtGuard } from '../auth/admin-jwt.guard.js';
-import { Team } from './team.entity.js';
+import { Team } from './entities/team.entity.js';
 import { TeamsController } from './teams.controller.js';
 import { TeamsService } from './teams.service.js';
 

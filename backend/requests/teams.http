@@ -1,0 +1,22 @@
+### 
+GET http://localhost:3000/teams
+Content-Type: application/json
+
+### 
+POST http://localhost:3000/teams
+Content-Type: application/json
+
+{
+    "name":"time4_neji",
+    "members": []
+}
+
+### Adds one or more users has a team's member |
+### or either changes the team name
+### teamId/members/:userId'
+POST http://localhost:3000/teams/team_0MISU7Dgneq4MBL3MWR35/members/user_DsY-6DyENwwnbyXuKPpY7	
+Content-Type: application/json
+
+{
+  "user": "user_DsY-6DyENwwnbyXuKPpY7"
+}

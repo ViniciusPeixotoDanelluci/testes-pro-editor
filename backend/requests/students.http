@@ -1,0 +1,41 @@
+### Patch a user
+PATCH http://localhost:3000/users/user_OwNsB3Y3wbOLG5m4qX0Pq
+Content-Type: application/json
+
+{
+    "username": "Ceo of Fire",
+    "isAdmin": true
+}
+
+### A depender de como for eu vou precisar pesquisar como 
+### eu faço possível mudar pessoas de um time pro outro 
+
+### Create a new user 
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "username": "Ceo of Fire",
+    "isAdmin": true,
+    "password": "jojoba"
+}
+
+####
+POST http://localhost:3001/users
+Content-Type: application/json
+
+{
+    "username": "Ceo of Fire",
+    "role": "ADMIN",
+    "password": "jojoba"
+}
+
+
+### Get all users
+GET http://localhost:3000/users
+
+### Get a specific user
+GET http://localhost:3000/users/id
+
+### Mata um user
+DELETE http://localhost:3000/users/id

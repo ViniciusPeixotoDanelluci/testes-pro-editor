@@ -7,12 +7,21 @@ interface SignInBody {
   accountType: AccountType;
 }
 
+interface RefreshBody {
+  refreshToken: string
+}
+
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signin')
   signIn(@Body() body: SignInBody) {
+    return this.authService.signIn(body);
+  }
+
+  @Post('refresh')
+  refresh(@Body() body: RefreshBody) {
     return this.authService.signIn(body);
   }
 }

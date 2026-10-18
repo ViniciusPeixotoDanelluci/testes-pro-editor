@@ -1,19 +1,14 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { passwordMatches } from '../common/password.js';
-import { Manager } from '../managers/manager.entity.js';
-import { Team } from '../teams/team.entity.js';
+import { Team } from '../teams/entities/team.entity.js';
+import { SignInDto } from './dto/sign-in.dto.js';
+import { Manager } from '../managers/entities/manager.entity.js';
 
 export type AccountType = 'ADMIN' | 'TEAM';
-
-interface SignInInput {
-  username: string;
-  password: string;
-  accountType: AccountType;
-}
 
 @Injectable()
 export class AuthService {
@@ -21,12 +16,42 @@ export class AuthService {
     private readonly config: ConfigService,
     private readonly jwt: JwtService,
     @InjectRepository(Manager)
-    private readonly managers: Repository<Manager>,
+    private readonly managerRepository: Repository<Manager>,
     @InjectRepository(Team)
-    private readonly teams: Repository<Team>,
+    private readonly teamRepository: Repository<Team>,
   ) {}
 
-  async signIn(input: SignInInput) {
+  async signIn(signInDto: SignInDto) {
+    const { username, password, accountType } = signInDto
+    
+    if (!username || !password || !accountType) {
+      throw new BadRequestException(" Usuário, tipo de conta, ou senha inválidos")
+    }
+
+    // if (
+    //   typeof username !== 'string' ||
+    //   typeof password !== 'string' ||
+    //   !['ADMIN', 'TEAM'].includes(accountType)
+    // ) {
+    //   throw new UnauthorizedException('Usuário, tipo de conta ou senha inválidos.');
+    // }
+
+    // const prefix = input.accountType;
+    
+    const user = accountType === 'ADMIN'
+      ? await this.managerRepository.findOneBy({ username, password })
+      : await this.teamRepository.findOneBy({ username, password })
+
+    if (!user) {
+      throw new UnauthorizedException('Usuário não encontrado.');
+    }
+    
+    console.log("usuário a ser logado)", user)
+
+    return ;
+  }
+
+   async refresh(refreshToken: string) {
     if (
       typeof input?.username !== 'string' ||
       typeof input.password !== 'string' ||
@@ -76,4 +101,5 @@ export class AuthService {
 
     return { accessToken, refreshToken };
   }
+
 }

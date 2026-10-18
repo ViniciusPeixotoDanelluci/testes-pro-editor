@@ -4,17 +4,18 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
+  // ParseIntPipe,
   Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { AdminJwtGuard } from '../auth/admin-jwt.guard.js';
+// import { AdminJwtGuard } from '../auth/admin-jwt.guard.js';
 import { TeamsService } from './teams.service.js';
-import type { CreateTeamInput, UpdateTeamInput } from './teams.service.js';
+import { CreateTeamDto } from './dto/create-team.dto.js';
+// import type { CreateTeamInput, UpdateTeamInput } from './teams.service.js';
 
-@Controller('teams')
-@UseGuards(AdminJwtGuard)
+@Controller('times')
+// @UseGuards(AdminJwtGuard)
 export class TeamsController {
   constructor(private readonly teams: TeamsService) {}
 
@@ -24,25 +25,26 @@ export class TeamsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id') id: number) {
     return this.teams.findOne(id);
   }
 
   @Post()
-  create(@Body() body: CreateTeamInput) {
-    return this.teams.create(body);
+  create(@Body() createTeamDto: CreateTeamDto) {
+    return this.teams.create(createTeamDto);
   }
+  
+  // @Patch(':id')
+  // update(
+  //   @Param('id'/*, ParseIntPipe*/) id: number,
+  //   @Body() body: any/*UpdateTeamInput*/,
+  // ) {
+  //   return this.teams.update(id, body);
+  // }
 
-  @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() body: UpdateTeamInput,
-  ) {
-    return this.teams.update(id, body);
-  }
-
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.teams.remove(id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id'/*, ParseIntPipe*/) id: number) {
+  //   return this.teams.remove(id);
+  // }
+  
 }

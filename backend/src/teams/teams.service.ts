@@ -8,36 +8,31 @@ import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { hashPassword } from '../common/password.js';
-import { Team } from './team.entity.js';
+import { Team } from './entities/team.entity.js';
+import { CreateTeamDto } from './dto/create-team.dto.js';
 
-export interface CreateTeamInput {
-  username: string;
-  name: string;
-  password: string;
-  semester?: string;
-}
-
-export type UpdateTeamInput = Partial<CreateTeamInput>;
 
 @Injectable()
 export class TeamsService {
   constructor(
     @InjectRepository(Team)
     private readonly teams: Repository<Team>,
-    private readonly config: ConfigService,
+    // private readonly config: ConfigService,
   ) {}
 
   findAll() {
     return this.teams.find();
   }
 
-  async findOne(id: number) {
-    const team = await this.teams.findOneBy({ id });
-    if (!team) throw new NotFoundException('Team not found.');
+  findOne(id: number) {
+    const team = this.teams.findOneBy({ id });
+   
+    if (!team) throw new NotFoundException('Time não encontrado.');
+   
     return team;
   }
 
-  async create(input: CreateTeamInput) {
+  async create(createTeamDto: CreateTeamDto) {
     this.validate(input.username, input.name, input.password);
     try {
       const saved = await this.teams.save(
