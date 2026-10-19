@@ -85,7 +85,7 @@ export class AuthService {
       : await this.teamRepository.findOneBy({ username, password })
 
     if (!user) {
-      throw new UnauthorizedException('Credenciais inválidas.');
+      throw new UnauthorizedException('Credenciais inválidas.')
     }
     
     console.log("usuário a ser logado)", user)

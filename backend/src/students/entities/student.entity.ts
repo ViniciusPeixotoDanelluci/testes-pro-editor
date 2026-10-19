@@ -11,10 +11,10 @@ export class Student {
     @Column({ length: 50 })
     name!: string
     
-    @Column()
+    @Column({ enum: Semesters })
     semester!: Semesters
     
-    @ManyToOne(() => Team, (team) => team.members)
+    @ManyToOne(() => Team, (team) => team.members, { onDelete: "SET NULL" })
     //@JoinColumn({ name: 'teamId' }) // isso apenas explicita a relação, mas não precisa pois já é feito
     team?: Relation<Team>
 }

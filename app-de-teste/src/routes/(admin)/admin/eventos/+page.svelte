@@ -33,19 +33,21 @@
 <button onclick={() => dialog.showModal()}> Criar evento </button>
 
 <dialog bind:this={dialog}>
-    <div>
-        <label for="schedule">Horário de início: </label>
-        <input type="time" name="schedule" id="schedule" bind:value={schedule_value}>
-    </div>
-    <div>
-        <label for="duration">Duração (minutos): </label>
-        <input type="number" name="duration" id="duration" bind:value={duration_value}>
-    </div>
-    <div>
-        <label for="calendar">Data: </label>
-        <input type="date" name="calendar" id="calendar" bind:value={date_value}>
-        <!-- isso aqui tem que ter alguma checagem pra que não seja possível criar um evento no passado -->
-    </div>
-    <button onclick={() => createEvent(schedule_value, duration_value, date_value)}>Finalizar criação</button>
+    <form action="/?create-event">
+        <div>
+            <label for="schedule">Horário de início: </label>
+            <input type="time" name="schedule" id="schedule" bind:value={schedule_value}>
+        </div>
+        <div>
+            <label for="duration">Duração (minutos): </label>
+            <input type="number" name="duration" id="duration" bind:value={duration_value}>
+        </div>
+        <div>
+            <label for="calendar">Data: </label>
+            <input type="date" name="calendar" id="calendar" bind:value={date_value}>
+            <!-- isso aqui tem que ter alguma checagem pra que não seja possível criar um evento no passado -->
+        </div>
+        <button onclick={() => createEvent(schedule_value, duration_value, date_value)}>Finalizar criação</button>
+    </form>
 </dialog>
 

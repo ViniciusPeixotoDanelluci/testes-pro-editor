@@ -18,17 +18,22 @@ export class StudentsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.studentsService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.studentsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
-    return this.studentsService.update(+id, updateStudentDto);
+  update(@Param('id') id: number, @Body() updateStudentDto: UpdateStudentDto) {
+    return this.studentsService.update(id, updateStudentDto);
+  }
+  
+  @Patch(':id')
+  assignTeam(@Param('id') id: number) {
+    return this.studentsService.remove(id);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.studentsService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.studentsService.remove(id);
   }
 }

@@ -14,8 +14,8 @@ import { TeamsModule } from './teams/teams.module.js';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
+      // inject: [ConfigService],
+      useFactory: (/*config: ConfigService*/) => ({
         type: 'sqlite',
         database: 'db.sqlite',
         autoLoadEntities: true,

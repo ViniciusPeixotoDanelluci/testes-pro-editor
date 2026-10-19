@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Team } from "../../teams/entities/team.entity.js";
+import { Semesters } from "../../common/semester-enum.js";
 let Student = class Student {
     id;
     name;
@@ -24,11 +25,11 @@ __decorate([
     __metadata("design:type", String)
 ], Student.prototype, "name", void 0);
 __decorate([
-    Column(),
+    Column({ enum: Semesters }),
     __metadata("design:type", String)
 ], Student.prototype, "semester", void 0);
 __decorate([
-    ManyToOne(() => Team, (team) => team.members),
+    ManyToOne(() => Team, (team) => team.members, { onDelete: "SET NULL" }),
     __metadata("design:type", Object)
 ], Student.prototype, "team", void 0);
 Student = __decorate([

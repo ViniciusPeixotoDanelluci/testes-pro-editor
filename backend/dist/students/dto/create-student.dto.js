@@ -8,6 +8,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
+import { Semesters } from "../../common/semester-enum.js";
 import { Team } from "../../teams/entities/team.entity.js";
 export class CreateStudentDto {
     name;

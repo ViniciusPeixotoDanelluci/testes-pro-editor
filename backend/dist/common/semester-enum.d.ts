@@ -1,4 +1,4 @@
-export declare const enum Semesters {
+export declare enum Semesters {
     FIRST = "1\u00B0 Termo",
     SECOND = "2\u00B0 Termo",
     THIRD = "3\u00B0 Termo",

@@ -1,0 +1,40 @@
+
+@body = http://localhost:3000
+
+### Cria um professor ( precisa de autenticação)
+POST {{body}}/managers
+Content-Type: application/json
+
+{
+    "username": "Ceo",
+    "password": "true"
+}
+
+### Patcheia um novo profesor 
+PATCH {{body}}/managers/2
+Content-Type: application/json
+
+{
+    "username": "Ceo of Fire",
+    "password": "butifyoucloseyoureyes"
+}
+
+####
+POST http://localhost:3001/users
+Content-Type: application/json
+
+{
+    "username": "Ceo of Fire",
+    "role": "ADMIN",
+    "password": "jojoba"
+}
+
+
+### Get todos professores
+GET {{body}}/managers
+
+### Get 1 professor
+GET {{body}}/managers/1
+
+### Mata um user
+DELETE {{body}}/managers/1

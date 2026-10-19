@@ -1,4 +1,4 @@
-export const enum Semesters {
+export enum Semesters {
   FIRST = '1° Termo',
   SECOND = '2° Termo',
   THIRD = '3° Termo',

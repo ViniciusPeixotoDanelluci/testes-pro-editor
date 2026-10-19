@@ -35,7 +35,7 @@ export class AppService {
       await db.save(student2)
 
       const student3 = db.create(Student, {
-        name: 'Lula',
+        name: 'Luis Ricardo',
         semester: Semesters.SECOND
       })
 
@@ -57,7 +57,7 @@ export class AppService {
       await db.save(professor1)
 
       const unassignedStudent = db.create(Student, {
-        name: 'Eu',
+        name: 'Doria',
         semester: Semesters.THIRD,
       });
 

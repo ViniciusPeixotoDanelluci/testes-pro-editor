@@ -54,7 +54,7 @@ let AppService = class AppService {
             });
             await db.save(professor1);
             const unassignedStudent = db.create(Student, {
-                name: 'Eu',
+                name: 'Doria',
                 semester: Semesters.THIRD,
             });
             await db.save(unassignedStudent);
